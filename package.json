@@ -1,0 +1,51 @@
+{
+  "name": "openstream",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --configLoader runner",
+    "build": "tsc --noEmit && vite build --configLoader runner",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --configLoader runner && node --test server/*.node-test.mjs scripts/*.node-test.mjs",
+    "test:android-device": "sh scripts/android-device-smoke.sh",
+    "test:openxr": "scripts/openxr-core-test.sh",
+    "test:tv": "node --test scripts/tv-core.node-test.mjs",
+    "build:tv": "node scripts/build-tv-packages.mjs",
+    "test:watch": "vitest",
+    "preview": "vite preview --configLoader runner",
+    "gateway": "node server/openstream-gateway.mjs",
+    "search:audit": "node scripts/title-search-audit.mjs",
+    "netflix:top10": "node scripts/netflix-top10.mjs",
+    "netflix:top10:emulate": "node scripts/netflix-top10.mjs --emulate",
+    "metadata:omdb": "node scripts/omdb-lookup.mjs",
+    "qa": "node scripts/qa.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.185.1",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.185.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "axe-core": "^4.12.1",
+    "playwright-core": "^1.61.1",
+    "typescript": "^5.6.3",
+    "vite": "^6.4.5",
+    "vitest": "^4.1.12"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": "8.5.23",
+      "nanoid": "3.3.18",
+      "browserslist": "4.28.7",
+      "source-map-js": "1.2.2",
+      "baseline-browser-mapping": "2.11.0"
+    }
+  }
+}
