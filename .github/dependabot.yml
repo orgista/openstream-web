@@ -1,12 +1,7 @@
+# Source and dependencies are synced from the private repo, so dependency bumps
+# happen there. This public copy only updates the actions its own CI uses.
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    groups:
-      npm:
-        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -14,3 +9,7 @@ updates:
     groups:
       actions:
         patterns: ["*"]
+    ignore:
+      # v5+ ignores package.json overrides with our lockfile.
+      - dependency-name: pnpm/action-setup
+        update-types: [version-update:semver-major]
