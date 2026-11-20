@@ -19,6 +19,17 @@ type ViewerRuntime = {
   resetView: () => void;
 };
 
+/** Only network or in-memory media may reach the video element (no javascript:, data: or file: URLs). */
+function playableSource(source: string | null | undefined): string | null {
+  if (!source) return null;
+  try {
+    const url = new URL(source, window.location.href);
+    return url.protocol === "https:" || url.protocol === "http:" || url.protocol === "blob:" ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
 export function XrViewer() {
   const initialOptions = useMemo(() => parseXrViewerOptions(window.location), []);
   const mountRef = useRef<HTMLDivElement>(null);
@@ -94,7 +105,8 @@ export function XrViewer() {
     mount.appendChild(renderer.domElement);
 
     const video = document.createElement("video");
-    if (source) video.src = source;
+    const playable = playableSource(source);
+    if (playable) video.src = playable;
     video.crossOrigin = "anonymous";
     video.loop = true;
     video.muted = isMutedRef.current;
